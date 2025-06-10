@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Criterion Tracker</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Latest Releases</h1>
+  <ul>
+    <% films.forEach(film => { %>
+      <li>
+        <img src="<%= film.cover_art_url %>" alt="" width="100" />
+        <strong><%= film.title %></strong> by <%= film.director %>
+        <br><a href="<%= film.url %>">View</a>
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

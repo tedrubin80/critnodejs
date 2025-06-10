@@ -1,15 +1,18 @@
 
-// server.js
 const express = require('express');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const cron = require('node-cron');
 const scrapeCriterion = require('./scraper');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 const DB_PATH = process.env.DATABASE_PATH || './data/criterion_releases.db';
+
+// Ensure DB folder exists
+if (!fs.existsSync('./data')) fs.mkdirSync('./data');
 
 // Middleware
 app.use(express.static('public'));
@@ -73,4 +76,6 @@ app.get('/export', (req, res) => {
 cron.schedule('0 9 * * *', () => scrapeCriterion(db));
 
 // Start server
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
+});
